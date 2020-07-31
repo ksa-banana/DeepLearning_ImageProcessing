@@ -1,8 +1,6 @@
-import matplotlib.pyplot as plt
 import os
 import pandas as pd
 import cv2
-from PIL import Image
 import numpy as np
 
 
@@ -10,8 +8,8 @@ import numpy as np
 
 def crop_cat_left_ear(dir):
     # image path
-    image_path = os.path.join("C:/Users/USER/Downloads/13371_18106_bundle_archive" + "/" + dir)
-    download_path = os.path.join("C:/Users/USER/Desktop/test/image")
+    image_path = os.path.join("C:/Users/knr64/Documents/tnr_cat_project/13371_18106_bundle_archive" + "/" + dir)
+    download_path = os.path.join("C:/Users/knr64/Documents/tnr_cat_project/image/crop_cat_left_ear_img")
 
 
     # 파일 리스트 불러오기
@@ -57,25 +55,40 @@ def crop_cat_left_ear(dir):
 
 
         # 필터 가로,세로 크기 구하기
-        max, min = 0, 1024
+        if y2 >= y1:
+            Ymax = y2
+            Ymin = y1
+        elif y3 >= y2:
+            Ymax = y3
+            Ymin = y2
+        else:
+            Ymax = y1
+            Ymin = y3
 
-        # 최대값
-        if x1 >= max:
-            max = y1
-        if x2 >= max:
-            max = y2
-        if x3 >= max:
-            max = y3
+        if x2 >= x1:
+            Xmax = x2
+            Xmin = x1
+        elif x3 >= x2:
+            Xmax = x3
+            Xmin = x2
+        else:
+            Xmax = x1
+            Xmin = x3
 
-        # 최소값
-        if x1 <= min:
-            min = y1
-        if x2 <= min:
-            max = y2
-        if x3 <= min:
-            max = y3
+        Yhalf_len = Ymax - Ymin
+        Xhalf_len = Xmax - Xmin
 
-        half_len = max - min
+        if Yhalf_len >= Xhalf_len:
+            half_len = Yhalf_len
+            half_len = int(half_len * (2 / 3))
+        else:
+            half_len = Xhalf_len
+            half_len = int(half_len * (2 / 3))
+
+        # half_len = max - min
+        # half_len = int(half_len * (2 / 3))
+
+
         # if x1 > x2 | x1 > x3:
         #     half_len =
         # elif x2 >= x3:
@@ -124,9 +137,10 @@ def crop_cat_left_ear(dir):
 
 
 if __name__ == "__main__":
-    crop_cat_left_ear("CAT_01")
-    crop_cat_left_ear("CAT_02")
-    crop_cat_left_ear("CAT_03")
-    crop_cat_left_ear("CAT_04")
-    crop_cat_left_ear("CAT_05")
-    crop_cat_left_ear("CAT_06")
+    crop_cat_left_ear("CAT_00")
+    # crop_cat_left_ear("CAT_01")
+    # crop_cat_left_ear("CAT_02")
+    # crop_cat_left_ear("CAT_03")
+    # crop_cat_left_ear("CAT_04")
+    # crop_cat_left_ear("CAT_05")
+    # crop_cat_left_ear("CAT_06")
