@@ -1,22 +1,23 @@
 import sys, cv2, os
 from keras.models import load_model
 import numpy as np
+import matplotlib.pyplot as plt
 
-from helper import resize, test
+from Helper import resize, test
 
 img_size = 224
-base_path = 'samples'
+base_path = './samples'
 file_list = sorted(os.listdir(base_path))
 
 # this is most important thing
-glasses = cv2.imread('images/glasses.png', cv2.IMREAD_UNCHANGED)
+glasses = cv2.imread('./Images/glasses.png', cv2.IMREAD_UNCHANGED)
 
 print('model load start')
 
 # 저장한 모델을 넣어주는 부분
 
-bbs_model = load_model('models/bbs_1.h5')
-lmks_model = load_model('models/lmks_1.h5')
+bbs_model = load_model('./Models/bbs_1.h5')
+lmks_model = load_model('./Models/lmks_1.h5')
 
 print('model load finish')
 print('testing start')
@@ -84,9 +85,7 @@ for f in file_list:
     rotated_glasses = cv2.warpAffine(glasses, M, (glasses.shape[1], glasses.shape[0]))
 
     try:
-        result_img = test.overlay_transparent(result_img, rotated_glasses, glasses_center[0], glasses_center[1],
-                                         overlay_size=(
-                                         int(glasses_size), int(glasses.shape[0] * glasses_size / glasses.shape[1])))
+        result_img = test.overlay_transparent(result_img, rotated_glasses, glasses_center[0], glasses_center[1], overlay_size=(int(glasses_size), int(glasses.shape[0] * glasses_size / glasses.shape[1])))
     except:
         print('failed overlay image')
 
@@ -95,6 +94,10 @@ for f in file_list:
     filename, ext = os.path.splitext(f)
     cv2.imwrite('result/%s_lmks%s' % (filename, ext), ori_img)
     cv2.imwrite('result/%s_result%s' % (filename, ext), result_img)
+    
+    # 이미지 결과 저장: landmark 한 것과 안경 씌운 것
+    coloredImg = cv2.imread('./result/cat_result.jpg')
+
 
     if cv2.waitKey(0) == ord('q'):
         break

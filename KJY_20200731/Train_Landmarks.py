@@ -19,6 +19,13 @@ elif mode is 'lmks':
 
 start_time = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
 
+# 에러 발생 // ValueError: Object arrays cannot be loaded when allow_pickle=False
+# 먼저 기존의 np.load를 np_load_old에 저장해둠.
+np_load_old = np.load
+# 기존의 parameter을 바꿔줌
+#np.load = lambda *a,**k: np_load_old(*a, allow_pickle=True, **k)
+np.load = lambda *a,**k: np_load_old(*a, allow_pickle=True)
+
 # 데이터셋 로드 (00~05: train set으로 사용. 06: validation set으로 사용)
 data_00 = np.load('./dataset/lmks_CAT_00.npy')
 data_01 = np.load('./dataset/lmks_CAT_01.npy')
@@ -56,7 +63,11 @@ inputs = Input(shape=(img_size, img_size, 3))
 
 # pretrained model: MobileNet -> 가볍다.
 # include_top = True로 하면 이미지를 분류한다. False로 하면 regression을 푸는 문제에 사용한다.
-mobilenetv2_model = mobilenet_v2.MobileNetV2(input_shape=(img_size, img_size, 3), alpha=1.0, depth_multiplier =1, include_top=False, weights='imagenet', input_tensor=inputs, pooling='max')
+
+# 에러 발생 // TypeError: ('Invalid keyword argument: %s', 'depth_multiplier')
+# depth_multiplier을 삭제해줌
+#mobilenetv2_model = mobilenet_v2.MobileNetV2(input_shape=(img_size, img_size, 3), alpha=1.0, depth_multiplier=1, include_top=False, weights='imagenet', input_tensor=inputs, pooling='max')
+mobilenetv2_model = mobilenet_v2.MobileNetV2(input_shape=(img_size, img_size, 3), alpha=1.0, include_top=False, weights='imagenet', input_tensor=inputs, pooling='max')
 
 net = Dense(128, activation='relu')(mobilenetv2_model.layers[-1].output)
 net = Dense(64, activation='relu')(net)
@@ -68,9 +79,6 @@ model.summary()
 # training
 model.compile(optimizer=keras.optimizers.Adam(), loss='mse')
 
-model.fit(x_train, y_train, epochs=50, batch_size=32, shuffle=True, validation_data=(x_test, y_test), verbose=1,
-  callbacks=[ TensorBoard(log_dir='logs\%s' % (start_time)), ModelCheckpoint('models/%s.h5' % (start_time), monitor='val_loss', verbose=1, save_best_only=True, mode='auto'), ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5, verbose=1, mode='auto')
-  ]
-)
+model.fit(x_train, y_train, epochs=50, batch_size=32, shuffle=True, validation_data=(x_test, y_test), verbose=1, callbacks=[TensorBoard(log_dir='logs\%s' % (start_time)), ModelCheckpoint('models/%s.h5' % (start_time), monitor='val_loss', verbose=1, save_best_only=True, mode='auto'), ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5, verbose=1, mode='auto')])
 
 print('model training finish!')

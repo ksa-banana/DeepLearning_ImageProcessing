@@ -23,7 +23,8 @@ start_time = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
 # 먼저 기존의 np.load를 np_load_old에 저장해둠.
 np_load_old = np.load
 # 기존의 parameter을 바꿔줌
-np.load = lambda *a,**k: np_load_old(*a, allow_pickle=True, **k)
+#np.load = lambda *a,**k: np_load_old(*a, allow_pickle=True, **k)
+np.load = lambda *a,**k: np_load_old(*a, allow_pickle=True)
 
 print('dataloads start!')
 
@@ -47,7 +48,7 @@ y_train = np.concatenate((data_00.item().get(mode), data_01.item().get(mode), da
 x_test = np.array(data_06.item().get('imgs'))
 y_test = np.array(data_06.item().get(mode))
 
-# 정규화
+# 정규화: 이미지를 0~1 사이의 값을 갖도록 한다.
 x_train = x_train.astype('float32') / 255.
 x_test = x_test.astype('float32') / 255.
 
@@ -58,25 +59,35 @@ x_test - np.reshape(x_test, (-1, img_size, img_size, 3))
 y_train = np.reshape(y_train, (-1, output_size))
 y_test = np.reshape(y_test, (-1, output_size))
 
-# 모델 정의
+# 모델 정의 (model structure)
+# 224 * 224 * 3
 # RGB: 3 채널
 inputs = Input(shape=(img_size, img_size, 3))
 
+# 모델 만들기
 # pretrained model: MobileNet -> 가볍다.
 # include_top = True로 하면 이미지를 분류한다. False로 하면 regression을 푸는 문제에 사용한다.
+
+# 에러 발생 // TypeError: ('Invalid keyword argument: %s', 'depth_multiplier')
+# depth_multiplier을 삭제해줌
 mobilenetv2_model = mobilenet_v2.MobileNetV2(input_shape=(img_size, img_size, 3), alpha=1.0, include_top=False, weights='imagenet', input_tensor=inputs, pooling='max')
 
-
+# moblienetv2에서 나온 output을 Dense layer에 넣는다.
 net = Dense(128, activation='relu')(mobilenetv2_model.layers[-1].output)
 net = Dense(64, activation='relu')(net)
+# output_size만큼 출력을 내보낸다.
 net = Dense(output_size, activation='linear')(net)
 
 model = Model(inputs=inputs, outputs=net)
 model.summary()
+# 모델 객체를 만든 것 완료
 
 # training
+# Adam optimizer 사용
+# lose = Mean Squared Error
 model.compile(optimizer=keras.optimizers.Adam(), loss='mse')
 
+# fitting
 model.fit(x_train, y_train, epochs=50, batch_size=32, shuffle=True, validation_data=(x_test, y_test), verbose=1, callbacks=[TensorBoard(log_dir='logs\%s' % (start_time)), ModelCheckpoint('models/%s.h5' % (start_time), monitor='val_loss', verbose=1, save_best_only=True, mode='auto'), ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5, verbose=1, mode='auto')])
 
 print('model training finish!')
