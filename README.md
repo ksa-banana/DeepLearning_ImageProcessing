@@ -49,6 +49,9 @@
         </li>
       </ul>
       <li>
+      <h5><a href="https://github.com/kairess/cat_hipsterizer">참고한 자료 (Cat Hipsterizer: 고양이 얼굴 인식 모델 알고리즘)</a></h5>
+      </li>
+      <li>
         <h5><a href="">프로젝트 문서화</a></h5>
       </li>
        <li>
