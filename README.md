@@ -1,5 +1,4 @@
-# DeepLearning_ImageProcessing
-2020 혁신성장 청년인재 인공지능(AI) 전문가 집중양성: DeepLearning_ImageProcessing
+# 2020 혁신성장 청년인재 인공지능(AI) 전문가 집중양성: DeepLearning_ImageProcessing
 <h4>[장소] KSA 한국표준협회</h4>
 <h4>[강사] 우진철 박사님</h4>
 <h4>[기업] 몽키소프트(MonkeySoft)</h4>
