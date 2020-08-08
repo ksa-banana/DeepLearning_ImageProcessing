@@ -27,13 +27,13 @@ np_load_old = np.load
 np.load = lambda *a,**k: np_load_old(*a, allow_pickle=True)
 
 # 데이터셋 로드 (00~05: train set으로 사용. 06: validation set으로 사용)
-data_00 = np.load('./dataset/lmks_CAT_00.npy')
-data_01 = np.load('./dataset/lmks_CAT_01.npy')
-data_02 = np.load('./dataset/lmks_CAT_02.npy')
-data_03 = np.load('./dataset/lmks_CAT_03.npy')
-data_04 = np.load('./dataset/lmks_CAT_04.npy')
-data_05 = np.load('./dataset/lmks_CAT_05.npy')
-data_06 = np.load('./dataset/lmks_CAT_06.npy')
+data_00 = np.load('./Dataset/lmks_CAT_00.npy')
+data_01 = np.load('./Dataset/lmks_CAT_01.npy')
+data_02 = np.load('./Dataset/lmks_CAT_02.npy')
+data_03 = np.load('./Dataset/lmks_CAT_03.npy')
+data_04 = np.load('./Dataset/lmks_CAT_04.npy')
+data_05 = np.load('./Dataset/lmks_CAT_05.npy')
+data_06 = np.load('./Dataset/lmks_CAT_06.npy')
 
 # x_train에 이미지 넣기
 x_train = np.concatenate((data_00.item().get('imgs'), data_01.item().get('imgs'), data_02.item().get('imgs'), data_03.item().get('imgs'), data_04.item().get('imgs'), data_05.item().get('imgs')), axis=0)
@@ -81,4 +81,4 @@ model.compile(optimizer=keras.optimizers.Adam(), loss='mse')
 
 model.fit(x_train, y_train, epochs=50, batch_size=32, shuffle=True, validation_data=(x_test, y_test), verbose=1, callbacks=[TensorBoard(log_dir='logs\%s' % (start_time)), ModelCheckpoint('models/%s.h5' % (start_time), monitor='val_loss', verbose=1, save_best_only=True, mode='auto'), ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5, verbose=1, mode='auto')])
 
-print('model training finish!')
+print('Model training finish!')
