@@ -6,11 +6,8 @@ import matplotlib.pyplot as plt
 from Helper import resize, test
 
 img_size = 224
-base_path = './samples'
+base_path = './Samples'
 file_list = sorted(os.listdir(base_path))
-
-# this is most important thing
-glasses = cv2.imread('./Images/glasses.png', cv2.IMREAD_UNCHANGED)
 
 print('model load start')
 
@@ -83,39 +80,11 @@ for f in file_list:
 
     #파일 쓰기
     filename, ext = os.path.splitext(f)
-    file = open('C://WorkSpace//WorkSpace_Pycharm//20200731//Result//Point//'+filename+'.jpg'+'.cat', 'w')
+    file = open('D://workspace_KSA//workspace_PyCharm//Deeplearning_20200730//Result//Point//'+filename+'.jpg'+'.cat', 'w')
     file.write('9')
     for i in pointList:
         data = '\t{}'.format(i)
         file.write(data)
     file.close()
-
-    print('wearing glasses')
-
-    # wearing glasses
-    glasses_center = np.mean([ori_lmks[5], ori_lmks[6]], axis=0)
-    glasses_size = np.linalg.norm(ori_lmks[5] - ori_lmks[6]) * 2
-
-    angle = -test.angle_between(ori_lmks[5], ori_lmks[6])
-    M = cv2.getRotationMatrix2D((glasses.shape[1] / 2, glasses.shape[0] / 2), angle, 1)
-    rotated_glasses = cv2.warpAffine(glasses, M, (glasses.shape[1], glasses.shape[0]))
-
-    try:
-        result_img = test.overlay_transparent(result_img, rotated_glasses, glasses_center[0], glasses_center[1], overlay_size=(int(glasses_size), int(glasses.shape[0] * glasses_size / glasses.shape[1])))
-    except:
-        print('failed overlay image')
-
-    cv2.imshow('img', ori_img)
-    cv2.imshow('result', result_img)
-    filename, ext = os.path.splitext(f)
-    cv2.imwrite('result/%s_lmks%s' % (filename, ext), ori_img)
-    cv2.imwrite('result/%s_result%s' % (filename, ext), result_img)
-    
-    # 이미지 결과 저장: landmark 한 것과 안경 씌운 것
-    coloredImg = cv2.imread('./result/cat_result.jpg')
-
-
-    if cv2.waitKey(0) == ord('q'):
-        break
 
 print('testing finish')

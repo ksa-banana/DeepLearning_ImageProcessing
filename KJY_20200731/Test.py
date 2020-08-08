@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from Helper import resize, test
 
 img_size = 224
-base_path = './samples'
+base_path = './Samples'
 file_list = sorted(os.listdir(base_path))
 
 # this is most important thing
@@ -90,13 +90,13 @@ for f in file_list:
         print('failed overlay image')
 
     cv2.imshow('img', ori_img)
-    cv2.imshow('result', result_img)
+    cv2.imshow('Result', result_img)
     filename, ext = os.path.splitext(f)
-    cv2.imwrite('result/%s_lmks%s' % (filename, ext), ori_img)
-    cv2.imwrite('result/%s_result%s' % (filename, ext), result_img)
+    cv2.imwrite('Result/%s_lmks%s' % (filename, ext), ori_img)
+    cv2.imwrite('Result/%s_result%s' % (filename, ext), result_img)
     
     # 이미지 결과 저장: landmark 한 것과 안경 씌운 것
-    coloredImg = cv2.imread('./result/cat_result.jpg')
+    coloredImg = cv2.imread('./Result/cat_result.jpg')
 
 
     if cv2.waitKey(0) == ord('q'):
