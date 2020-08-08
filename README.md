@@ -41,7 +41,7 @@
           <h5>강나래: kaggle 데이터 수집, 왼쪽 귀가 잘린 고양이 사진 데이터 수집, 고양이 귀 인식 모델 구현(Classification 문제)</h5> 
         </li>
         <li>
-          <h5>김주연: kaggle 데이터 수집, 고양이 얼굴 인식 모델 구현(Regression 문제), 고양이 얼굴 라벨링 좌표를 구하는 알고리즘 작성, 잘린 귀 고양이 이미지 데이터 증강(Data augmentation) </h5> 
+          <h5>김주연: kaggle 데이터 수집, 고양이 얼굴 인식 모델 구현(Regression, Localization), 고양이 얼굴 라벨링 좌표를 구하는 알고리즘 작성, 잘린 귀 고양이 이미지 데이터 증강(Data augmentation) </h5> 
         </li>
         <li>
           <h5>임성환: kaggle 데이터 수집, 이미지 자르는 알고리즘 작성</h5> 
