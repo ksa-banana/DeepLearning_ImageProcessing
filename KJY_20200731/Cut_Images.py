@@ -75,8 +75,7 @@ def ear_img_save(cat_image, file_name, loc_list):
             left_ear_image = plt.imshow(
                 cat_image[(loc_list[2] - 15): (loc_list[3] + 15), (loc_list[0] - 15): (loc_list[1] + 15)])
             plt.axis('off')
-            plt.savefig('D:/workspace_KSA/workspace_PyCharm/Deeplearning_20200730/Dataset_TNR_CAT/left_ear/' + file_name, bbox_inches='tight',
-                        pad_inches=0)
+            plt.savefig('D:/workspace_KSA/workspace_PyCharm/Deeplearning_20200730/Result_TNR_CAT/left_ear/' + file_name+'.jpg', bbox_inches='tight', pad_inches=0)
             plt.close()
             print(file_name, '왼쪽 귀 저장 완료')
 
@@ -84,26 +83,28 @@ def ear_img_save(cat_image, file_name, loc_list):
             left_ear_image = plt.imshow(
                 cat_image[(loc_list[6] - 15): (loc_list[7] + 15), (loc_list[4] - 15): (loc_list[5] + 15)])
             plt.axis('off')
-            plt.savefig('D:/workspace_KSA/workspace_PyCharm/Deeplearning_20200730/Dataset_TNR_CAT/right_ear/' + file_name,
-                        bbox_inches='tight', pad_inches=0)
+            plt.savefig('D:/workspace_KSA/workspace_PyCharm/Deeplearning_20200730/Result_TNR_CAT/right_ear/' + file_name+'.jpg', bbox_inches='tight', pad_inches=0)
             plt.close()
             return print(file_name, '오른쪽 귀 저장 완료')
 
 
-path = 'D:/workspace_KSA/workspace_PyCharm/Deeplearning_20200730/Dataset_TNR_CAT'
-folders = os.listdir(path)
+if __name__ == '__main__':
+    path = 'D:/workspace_KSA/workspace_PyCharm/Deeplearning_20200730/Dataset_TNR_CAT'
+    folders = os.listdir(path)
 
-for folder in folders:
+    for folder in folders:
 
-    img_file_list, cat_file_list = extract_file(path + '/' + folder)
+        img_file_list, cat_file_list = extract_file(path + '/' + folder)
 
-    for i in range(len(img_file_list)):
+        for i in range(len(img_file_list)):
 
-        cat_image = plt.imread('D:/workspace_KSA/workspace_PyCharm/Deeplearning_20200730/Dataset_TNR_CAT' + '/' + folder + '/' + img_file_list[i])
-        loc_list = preprocessing_cat_file(folder, cat_file_list[i])
+            cat_image = plt.imread(
+                'D:/workspace_KSA/workspace_PyCharm/Deeplearning_20200730/Dataset_TNR_CAT' + '/' + folder + '/' +
+                img_file_list[i])
+            loc_list = preprocessing_cat_file(folder, cat_file_list[i])
 
-        try:
-            ear_img_save(cat_image, img_file_list[i][:-4], loc_list)
+            try:
+                ear_img_save(cat_image, img_file_list[i][:-4], loc_list)
 
-        except Exception as ex:
-            print(ex)
+            except Exception as ex:
+                print(ex)
