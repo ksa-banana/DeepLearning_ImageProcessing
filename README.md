@@ -53,6 +53,9 @@
     <li>
       <h5><a href="">프로젝트 문서화</a></h5>
     </li>
+   <li>
+     <h5><a href="https://docs.google.com/presentation/d/1aIDb1_u-_TxHti0wbXW6bReowqZ0gwN0TQjeTnE4tEg/edit?ts=5f1fdb03">프로젝트 발표 자료</a></h5>
+   </li>
      <li>
       <h5><a href="">프로젝트 동영상</a></h5>
      </li>
