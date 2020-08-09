@@ -57,7 +57,7 @@
      <h5>참고한 자료</h5>
      <ul>
        <li><h5><a href="https://github.com/kairess/cat_hipsterizer">Cat Hipsterizer: 고양이 얼굴 인식 모델 알고리즘</a></h5></li>
-       <li><h5><a href="https://github.com/aleju/imgaug">imgaug</a></h5></li>
+       <li><h5><a href="https://github.com/aleju/imgaug">데이터 증강: imgaug</a></h5></li>
      </ul>
    </li>
     <li>
