@@ -30,7 +30,7 @@
   <li>
     <h5>프로젝트 구현 목적</h5>
       <ul>
-        <li><h5>고양이 데이터를 이용한 Localization 문제를 해결한다.</h5></li>
+        <li><h5>고양이 데이터를 이용한 Localization, Regression 문제를 해결한다.</h5></li>
         <li><h5>고양이 귀 데이터를 이용한 Classification 문제를 해결한다.</h5></li>
         <li><h5>지도 학습 문제(입력 이미지, bounding box 좌표값)로 접근한다. </h5></li>
         <li><h5>딥러닝 모델을 구현하기 위해 데이터 전처리, 라벨링, 모델링을 한다.</h5></li>
@@ -44,13 +44,13 @@
    </li>
       <ul>
         <li>
-          <h5>강나래: kaggle 데이터 수집, 왼쪽 귀가 잘린 고양이 사진 데이터 수집, 고양이 귀 인식 모델 구현(Classification 문제)</h5> 
+          <h5>강나래: kaggle 데이터 수집, 왼쪽 귀가 잘린 고양이 사진 데이터 수집, 고양이 귀 인식 모델 구현(Classification 문제), 프로젝트 발표 자료 수정</h5> 
         </li>
         <li>
-          <h5>김주연: kaggle 데이터 수집, 고양이 얼굴 인식 모델 구현(Regression, Localization), 고양이 얼굴 라벨링 좌표를 구하는 알고리즘 작성, 잘린 귀 고양이 이미지 데이터 증강(Data augmentation) </h5> 
+          <h5>김주연: kaggle 데이터 수집, 고양이 얼굴 인식 모델 구현(Regression, Localization), 고양이 얼굴 라벨링 좌표를 구하는 알고리즘 작성, 잘린 귀 고양이 이미지 데이터 증강(Data augmentation), 프로젝트 발표 자료 작성 </h5> 
         </li>
         <li>
-          <h5>임성환: kaggle 데이터 수집, 이미지 자르는 알고리즘 작성</h5> 
+          <h5>임성환: kaggle 데이터 수집, 이미지 자르는 알고리즘 작성, 프로젝트 발표 자료 수정</h5> 
         </li>
       </ul>
    <li>
