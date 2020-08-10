@@ -4,6 +4,8 @@ from keras.models import Model
 from keras.applications import mobilenet_v2
 import numpy as np
 import tensorflow as tf
+import matplotlib.pyplot as plt
+
 
 # gpu
 config = tf.ConfigProto()
@@ -67,7 +69,6 @@ y_test = np.reshape(y_test, (-1, 1))
 print('정규화 완료')
 
 
-# 모델
 inputs = Input(shape=(img_size, img_size, 3))
 
 mobilenetv2_model = mobilenet_v2.MobileNetV2(input_shape=(img_size, img_size, 3), alpha=1.0, include_top=True, weights=None, input_tensor=inputs, classes=2)
@@ -83,20 +84,45 @@ model.summary()
 
 
 # training
-model.compile(optimizer=keras.optimizers.Adam(), loss='mse')
 
-model.fit(x_train, y_train,
-          epochs=50,
-          batch_size=32,
-          shuffle=True,
-          validation_data=(x_val, y_val),
-          verbose=1
-)
+
+
+model.compile(optimizer=keras.optimizers.Adam(), metrics=['accuracy'], loss='mse')
+
+
+history = model.fit(x_train, y_train,
+                    epochs=50,
+                    batch_size=32,
+                    shuffle=True,
+                    validation_data=(x_val, y_val),
+                    verbose=1
+                )
+
+
 
 
 # 모델 평가
 loss_and_metrics = model.evaluate(x_test, y_test, batch_size=32)
-print('loss_and_metrics : ' + str(loss_and_metrics))
+print('loss : ' + str(loss_and_metrics))
+
+
+# 학습 정확성 값과 검증 정확성 값을 플롯팅 합니다.
+plt.plot(history.history['acc'])
+plt.plot(history.history['val_acc'])
+plt.title('Model accuracy')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Test'], loc='upper left')
+plt.show()
+
+# 학습 손실 값과 검증 손실 값을 플롯팅 합니다.
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('Model loss')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Test'], loc='upper left')
+plt.show()
 
 
 # save model
